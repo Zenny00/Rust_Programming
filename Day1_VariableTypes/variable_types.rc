@@ -1,0 +1,66 @@
+// Name: Joshua Comfort
+// Date: 3/17/2023
+// Done as part of learning the Rust programming language. Experimenting with different variable types.
+
+use std::io;
+use std::io::Write;
+
+// Simple function to return the square of a 32-bit integer
+fn square_num(value: &i32) -> i32
+{
+	// Square the input
+	let output: i32 = value * value;
+	return output;
+}
+
+// Recursive function to calculate the factorial of a number
+fn factorial(value: &i32) -> i32
+{
+	// Base case || stopping case
+	if *value == 0
+	{
+		return 1;
+	}
+
+	// Recursive case
+	let i: i32 = *value - 1;
+	return value * factorial(&i);
+}
+
+// Fibonacci number function, calculate the nth Fibonacci number recursively
+fn fibonacci(value: &i32) -> i32
+{
+	// Base case
+	if *value <= 0
+	{
+		return 0;
+	}
+	if *value == 1
+	{
+		return 1;
+	}
+
+	// Recursive case
+	let n_1: i32 = *value - 1;
+	let n_2: i32 = *value - 2;
+	return fibonacci(&n_1) + fibonacci(&n_2);
+}
+
+fn main()
+{
+	print!("Please enter an integer: ");
+	
+	// Flush the output buffer, print! does not do this automatically
+	io::stdout().flush().unwrap();
+
+	// Create a new String and read in the from the console
+	let mut user_input = String::new();
+	io::stdin().read_line(&mut user_input).expect("Error reading line from the console");
+
+	// Convert to a 32-bit integer
+	let num: i32 = user_input.trim().parse().expect("Could not convert!");
+
+	print!("The square of {} is {}\n", num, square_num(&num));
+	print!("The factorial of {} is {}\n", num, factorial(&num));
+	print!("The {}th number of the Fibonacci sequence is {}\n", num, fibonacci(&(num-1)));
+}
